@@ -9,6 +9,7 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+# Configure static analyzer exclusions for generated platform files
 analyzer:
   exclude:
     - build/**
@@ -20,6 +21,8 @@ analyzer:
     - linux/**
 
 linter:
+  # Customize specific lint rules for the Student Shop project
+  # Rules can be enabled/disabled to match team coding guidelines
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
   # included above or to enable additional rules. A list of all available lints

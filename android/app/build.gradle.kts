@@ -1,3 +1,5 @@
+// Android Application Module Build Script for Student Shop
+// Configures target Android SDK versions, compile settings, and signing configs.
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.

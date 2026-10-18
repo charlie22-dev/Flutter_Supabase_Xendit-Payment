@@ -1,3 +1,4 @@
+// Linux GTK application entry point launching the Flutter embedded engine
 #include "my_application.h"
 
 int main(int argc, char** argv) {

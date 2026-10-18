@@ -1,10 +1,14 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/product_model.dart';
 
+/// Service responsible for managing Supabase database interactions,
+/// invoking Edge Functions, and communicating with the Xendit payment flow.
 class PaymentService {
+  /// Singleton client instance for interacting with Supabase tables and functions
   final SupabaseClient _supabase = Supabase.instance.client;
 
-  // 1. Get all products for the store catalog
+  /// Fetches all active products from the Supabase `products` table,
+  /// ordered sequentially by item ID.
   Future<List<Product>> fetchProducts() async {
     final response = await _supabase
         .from('products')
@@ -16,7 +20,9 @@ class PaymentService {
         .toList();
   }
 
-  // 2. Trigger the 'create-invoice' Edge Function in Supabase
+  /// Triggers the `create-invoice` Supabase Edge Function to generate
+  /// a new Xendit invoice URL and creates an initial PENDING record in the `orders` table.
+  /// Returns a map containing `invoice_url` and `external_id`.
   Future<Map<String, dynamic>> createInvoice(Product product) async {
     final FunctionResponse res = await _supabase.functions.invoke(
       'create-invoice',
@@ -33,7 +39,9 @@ class PaymentService {
     return res.data as Map<String, dynamic>;
   }
 
-  // 3. Check if the webhook updated the order to PAID
+  /// Checks the current payment status of an order using its [externalId].
+  /// Typically called after the user completes payment on the Xendit checkout screen.
+  /// Returns 'PAID', 'PENDING', or 'EXPIRED'.
   Future<String> checkOrderStatus(String externalId) async {
     final record = await _supabase
         .from('orders')
@@ -44,7 +52,8 @@ class PaymentService {
     return record['status'] ?? 'PENDING';
   }
 
-  // 4. Get all orders for the Order History screen
+  /// Retrieves the complete list of order history records from the `orders` table,
+  /// sorted from newest to oldest by creation date.
   Future<List<Map<String, dynamic>>> fetchOrders() async {
     final response = await _supabase
         .from('orders')

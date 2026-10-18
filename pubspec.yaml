@@ -34,8 +34,15 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+
+  # Supabase client SDK for authentication, Postgres database queries, and Edge Functions
   supabase_flutter: ^2.18.3
+
+  # In-app WebView plugin used on Android and iOS to render Xendit checkout pages
   webview_flutter: ^4.14.1
+
+  # External URL launcher used on Web/Desktop to launch checkout links in browser
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

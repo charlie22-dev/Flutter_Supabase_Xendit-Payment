@@ -4,6 +4,8 @@ import '../services/payment_service.dart';
 import 'orders_screen.dart';
 import 'xendit_webview_screen.dart';
 
+/// Main catalog screen displaying available products for purchase.
+/// Allows students to browse items, initiate checkout via Xendit, and view order history.
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
 
@@ -12,9 +14,16 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
+  /// Payment service instance to handle Supabase queries and invoice creation
   final PaymentService _paymentService = PaymentService();
+
+  /// Flag indicating whether a checkout transaction is currently in progress
   bool _isProcessing = false;
 
+  /// Orchestrates the checkout workflow:
+  /// 1. Calls Supabase Edge Function to generate a Xendit checkout URL.
+  /// 2. Opens the checkout page in an in-app WebView (or browser for web).
+  /// 3. Polls the database to check if the payment succeeded upon completion.
   Future<void> _handleBuyProduct(Product product) async {
     setState(() => _isProcessing = true);
 
@@ -108,6 +117,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   return const Center(child: Text('No products found.'));
                 }
 
+                // Build vertically scrollable list of product cards
                 return ListView.builder(
                   padding: const EdgeInsets.all(12),
                   itemCount: products.length,
@@ -116,6 +126,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     return Card(
                       margin: const EdgeInsets.only(bottom: 12),
                       child: ListTile(
+                        // Product thumbnail image with fallback placeholder icon
                         leading: product.imageUrl.isNotEmpty
                             ? ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
@@ -133,7 +144,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           product.name,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
+                        // Price formatted in Philippine Pesos (PHP)
                         subtitle: Text('₱${product.price.toStringAsFixed(2)}'),
+                        // Trigger button to start purchasing the selected item
                         trailing: FilledButton(
                           onPressed: () => _handleBuyProduct(product),
                           child: const Text('Buy Now'),

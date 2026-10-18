@@ -1,3 +1,4 @@
+// Windows application entry point initializing Win32 window and Flutter engine
 #include <flutter/dart_project.h>
 #include <flutter/flutter_view_controller.h>
 #include <windows.h>

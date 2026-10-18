@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/payment_service.dart';
 
+/// Screen displaying the user's order history and payment statuses.
+/// Fetches transactions from Supabase and shows whether each order is PAID or PENDING.
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
 
@@ -9,6 +11,7 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+  /// Instance of payment service used to query orders
   final PaymentService _paymentService = PaymentService();
 
   @override
@@ -17,6 +20,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       appBar: AppBar(
         title: const Text('Order History'),
         actions: [
+          // Refresh button allowing user to reload the latest order status from database
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => setState(() {}),
@@ -38,6 +42,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             return const Center(child: Text('No orders yet.'));
           }
 
+          // Render the list of order cards
           return ListView.builder(
             padding: const EdgeInsets.all(12),
             itemCount: orders.length,
@@ -46,6 +51,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               final String status = order['status'] ?? 'PENDING';
               final bool isPaid = status == 'PAID';
 
+              // Visual card item presenting product name, reference ID, and payment status
               return Card(
                 margin: const EdgeInsets.only(bottom: 10),
                 child: ListTile(

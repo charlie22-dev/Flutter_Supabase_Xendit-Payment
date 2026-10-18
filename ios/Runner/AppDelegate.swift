@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 
+// Main iOS application delegate entry point managing application lifecycle and Flutter plugins
 @main
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
   override func application(

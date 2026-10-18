@@ -1,3 +1,5 @@
+// Root-level Gradle Build Script for Student Shop Android project.
+// Configures common repository dependencies and global build directories.
 allprojects {
     repositories {
         google()

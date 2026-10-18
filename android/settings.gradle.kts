@@ -1,3 +1,4 @@
+// Settings script configuring Gradle plugins and included project modules
 pluginManagement {
     val flutterSdkPath =
         run {
